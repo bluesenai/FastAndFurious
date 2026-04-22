@@ -23,11 +23,22 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+     private Long numero;
+
+    public Long getNumero() {
+        return numero;
+    }
+    
+     public void setNumero(Long numero) {
+        this.numero = numero;
+    }
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
 
     private LocalDateTime dataCriacao;
+    
 
     @ManyToMany
     private List<Produto> produtos;
@@ -73,5 +84,4 @@ public class Pedido {
     public void setCliente(String cliente) {
     this.cliente = cliente;
     }
-
 }

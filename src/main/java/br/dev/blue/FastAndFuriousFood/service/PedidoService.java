@@ -21,15 +21,20 @@ public class PedidoService {
 
     @Autowired
     private PedidoRepository repository;
-
+    
     public Pedido criarPedido(Pedido pedido) {
         pedido.setStatus(StatusPedido.ABERTO);
         pedido.setDataCriacao(LocalDateTime.now());
         
+         Long novoNumero = repository.findTopByOrderByNumeroDesc()
+    .map(p -> {
+        Long num = p.getNumero();
+        return (num == null ? 1L : num + 1);
+    })
+    .orElse(1L);
+           pedido.setNumero(novoNumero);
+           
         return repository.save(pedido);
-        
-        
-        
     }
 
     public Pedido atualizarStatus(Long id, StatusPedido status) {

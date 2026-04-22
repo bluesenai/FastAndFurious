@@ -3,6 +3,7 @@ package br.dev.blue.FastAndFuriousFood.repository;
 import br.dev.blue.FastAndFuriousFood.model.StatusPedido;
 import br.dev.blue.FastAndFuriousFood.model.Pedido;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /*
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
     
     public List<Pedido> findByStatus(StatusPedido status);
-
+    
+    Optional<Pedido> findTopByOrderByNumeroDesc();
     
 }
