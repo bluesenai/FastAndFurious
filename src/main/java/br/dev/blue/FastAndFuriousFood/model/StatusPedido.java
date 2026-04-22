@@ -10,6 +10,7 @@ package br.dev.blue.FastAndFuriousFood.model;
  */
 public enum StatusPedido {
     ABERTO,
+    EM_PREPARACAO,
     PRONTO,
     ENTREGUE
 }

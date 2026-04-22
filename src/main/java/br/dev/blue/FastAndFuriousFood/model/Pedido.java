@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,8 +32,7 @@ public class Pedido {
     @ManyToMany
     private List<Produto> produtos;
     
-    @ManyToOne
-    private Cliente cliente;
+    private String cliente;
 
     public Long getId() {
         return id;
@@ -68,12 +66,12 @@ public class Pedido {
         this.produtos = produtos;
     }
 
-    public Cliente getCliente() {
+    public String getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(String cliente) {
+    this.cliente = cliente;
     }
 
 }

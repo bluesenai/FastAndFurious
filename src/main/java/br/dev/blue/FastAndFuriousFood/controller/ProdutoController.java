@@ -21,7 +21,7 @@ import br.dev.blue.FastAndFuriousFood.repository.ProdutoRepository;
  * @author sesi3dib
  */
 @RestController
-@RequestMapping("/fastfurious/produto")
+@RequestMapping("/fastfurious/produtos")
 public class ProdutoController {
 
     @Autowired
