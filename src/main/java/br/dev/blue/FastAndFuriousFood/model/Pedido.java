@@ -4,14 +4,19 @@
  */
 package br.dev.blue.FastAndFuriousFood.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 import java.util.List;
 
 /**
@@ -25,7 +30,7 @@ public class Pedido {
     private Long id;
     
      private Long numero;
-
+     
     public Long getNumero() {
         return numero;
     }
@@ -33,6 +38,8 @@ public class Pedido {
      public void setNumero(Long numero) {
         this.numero = numero;
     }
+     
+     private LocalDateTime inicioPreparo;
 
     @Enumerated(EnumType.STRING)
     private StatusPedido status;
@@ -40,8 +47,13 @@ public class Pedido {
     private LocalDateTime dataCriacao;
     
 
-    @ManyToMany
-    private List<Produto> produtos;
+@ManyToMany
+@JoinTable(
+    name = "pedido_produto",
+    joinColumns = @JoinColumn(name = "pedido_id"),
+    inverseJoinColumns = @JoinColumn(name = "produto_id")
+)
+private List<Produto> produtos;
     
     private String cliente;
 
@@ -83,5 +95,45 @@ public class Pedido {
 
     public void setCliente(String cliente) {
     this.cliente = cliente;
+    
+    }
+     public LocalDateTime getInicioPreparo() {
+        return inicioPreparo;
+    }
+
+    public void setInicioPreparo(LocalDateTime inicioPreparo) {
+        this.inicioPreparo = inicioPreparo;
+    }
+    
+     @JsonProperty
+    public long getMinutosDecorridos() {
+        if (inicioPreparo == null) return 0;
+
+        return Duration
+                .between(inicioPreparo, LocalDateTime.now())
+                .toMinutes();
+    }
+
+    @JsonProperty
+    public boolean isAtrasado() {
+        return inicioPreparo != null && getMinutosDecorridos() > 14;
+    }
+    
+    @JsonProperty
+    public List<Produto> getProdutosPreparo() {
+        if (produtos == null) return List.of();
+
+        return produtos.stream()
+                .filter(p -> p.getCategoria() != Categoria.ACOMPANHAMENTO)
+                .collect(Collectors.toList());
+    }
+
+    @JsonProperty
+    public List<Produto> getProdutosEntrega() {
+        if (produtos == null) return List.of();
+
+        return produtos.stream()
+                .filter(p -> p.getCategoria() == Categoria.BEBIDA)
+                .collect(Collectors.toList());
     }
 }
