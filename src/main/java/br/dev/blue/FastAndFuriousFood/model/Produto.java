@@ -10,7 +10,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import br.dev.blue.FastAndFuriousFood.model.Categoria;
 /**
  *
  * @author sesi3dib
@@ -25,7 +25,7 @@ public class Produto {
     private String nome;
     private double preco;
 
-    @Enumerated(EnumType.STRING)
+   @Enumerated(EnumType.STRING)
     private Categoria categoria;
     
     public Long getId() {
@@ -47,10 +47,6 @@ public class Produto {
     public Categoria getCategoria() {
     return categoria;
     }
-    
-    public void setCategoria(String categoria) {
-    this.categoria = categoria;
-}
 
     public double getPreco() {
         return preco;
@@ -58,5 +54,9 @@ public class Produto {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public void setCategoria(Categoria valueOf) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

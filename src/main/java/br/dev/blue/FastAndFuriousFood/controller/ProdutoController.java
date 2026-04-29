@@ -5,6 +5,7 @@
 package br.dev.blue.FastAndFuriousFood.controller;
 
 import br.dev.blue.FastAndFuriousFood.DTO.ProdutoDTO;
+import br.dev.blue.FastAndFuriousFood.model.Categoria;
 import br.dev.blue.FastAndFuriousFood.model.Produto;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -36,7 +37,7 @@ public class ProdutoController {
     public Produto criar(@Valid @RequestBody ProdutoDTO dto) {
         Produto p = new Produto();
         p.setNome(dto.nome);
-        p.setCategoria(dto.categoria);
+        p.setCategoria(Categoria.valueOf(dto.categoria.toUpperCase()));
         p.setPreco(dto.preco);
         return repository.save(p);
     }

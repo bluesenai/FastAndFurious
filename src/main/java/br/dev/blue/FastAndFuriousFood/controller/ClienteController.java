@@ -4,54 +4,34 @@
  */
 package br.dev.blue.FastAndFuriousFood.controller;
 
+import br.dev.blue.FastAndFuriousFood.model.Cliente;
+import br.dev.blue.FastAndFuriousFood.service.ClienteService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 /**
  *
  * @author sesi3dib
  */
+@RestController
+@RequestMapping("/clientes")
 public class ClienteController {
-    private long id;
 
-    public ClienteController(long id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
-    private String nome;
+    @Autowired
+    private ClienteService service;
 
-    public long getId() {
-        return id;
+    @GetMapping
+    public List<Cliente> listar() {
+        return service.listar();
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 41 * hash + (int) (this.id ^ (this.id >>> 32));
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ClienteController other = (ClienteController) obj;
-        return this.id == other.id;
+    @PostMapping
+    public Cliente criar(@RequestBody Cliente cliente) {
+        return service.salvar(cliente);
     }
 }
