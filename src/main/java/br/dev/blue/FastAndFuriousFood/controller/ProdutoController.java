@@ -40,8 +40,5 @@ public class ProdutoController {
         p.setCategoria(Categoria.valueOf(dto.categoria.toUpperCase()));
         p.setPreco(dto.preco);
         return repository.save(p);
-        
-        
-        
     }
 }
