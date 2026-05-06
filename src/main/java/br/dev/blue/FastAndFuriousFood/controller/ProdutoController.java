@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.dev.blue.FastAndFuriousFood.repository.ProdutoRepository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  *
  * @author sesi3dib
  */
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/fastfurious/produtos")
 public class ProdutoController {
 
